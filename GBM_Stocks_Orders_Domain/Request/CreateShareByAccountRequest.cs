@@ -4,15 +4,30 @@ using System.Data;
 
 namespace GBM_Stocks_Orders_Domain.Request
 {
-    public partial class GetShareByAccountRequest : StoredRequest
+    public partial class CreateShareByAccountRequest : StoredRequest
     {
         /// <summary>
-        /// Account Id.
+        /// The account id
         /// </summary>
         public int AccountId { get; set; }
+
+        /// <summary>
+        /// Issuer Name
+        /// </summary>
+        public string IssuerName { get; set; }
+
+        /// <summary>
+        /// Share Price
+        /// </summary>
+        public decimal SharePrice { get; set; }
+
+        /// <summary>
+        /// Total Share
+        /// </summary>
+        public int  TotalShare { get; set; }
     }
 
-    public partial class GetShareByAccountRequest : StoredRequest
+    public partial class CreateShareByAccountRequest : StoredRequest
     {
         public override Task<bool> PreValidate()
         {
@@ -32,7 +47,7 @@ namespace GBM_Stocks_Orders_Domain.Request
 
         public override string GetStoredName()
         {
-            return "usp_GetShareByAccount";
+            return "usp_CreateShareByAccount";
         }
     }
 }

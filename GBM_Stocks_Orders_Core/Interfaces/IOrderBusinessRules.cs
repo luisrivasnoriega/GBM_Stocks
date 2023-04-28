@@ -10,6 +10,6 @@ namespace GBM_Stocks_Orders_Core.Interfaces
         public string ClosedMarket(int timestamp);
         public string DuplicatedOperation(OrderView? order, CreateOrderRequest createOrderRequest);
         public string InsufficientBalance(decimal cash, CreateOrderRequest createOrderRequest);
-        public string InsufficientStocks(int share, CreateOrderRequest createOrderRequest);
+        public string InsufficientStocks(ShareByAccountView? share, CreateOrderRequest createOrderRequest);
     }
 }

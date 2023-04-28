@@ -22,14 +22,14 @@ namespace GBM_Stocks_Orders_Core.Services
 
         public async Task<StoredSingleResponse<CreateOrderResponse>> CreateOrder(CreateOrderRequest createOrderRequest, string successMessage)
         {
-            StoredSingleResponse<CreateOrderResponse> response = new StoredSingleResponse<CreateOrderResponse>();
-
-            var getAccountDetailsRequest = new GetAccountDetailsRequest();
-            getAccountDetailsRequest.AccountId = createOrderRequest.AccountId;
-
+            var response = new StoredSingleResponse<CreateOrderResponse>();
+            var getAccountDetailsRequest = new GetAccountDetailsRequest
+            {
+                AccountId = createOrderRequest.AccountId
+            };
             var details = await OrderRepository.GetAccountDetails(getAccountDetailsRequest, successMessage);
-            string businessRule = string.Empty;
 
+            string businessRule = string.Empty;
             businessRule = OrderBusinessRules.AccountExist(details.Response.Account);
             if (string.IsNullOrEmpty(businessRule))
             {
@@ -47,23 +47,67 @@ namespace GBM_Stocks_Orders_Core.Services
                             if (createOrderRequest.Operation)
                             {
                                 businessRule = OrderBusinessRules.InsufficientBalance(details.Response.Account.Cash, createOrderRequest);
-                                if (string.IsNullOrEmpty(businessRule))
-                                {
-                                    response = await OrderRepository.CreateOrder(createOrderRequest, successMessage);
-                                    await UnitOfWork.CommitAsync();
-                                }
                             }
                             //sell
                             else
                             {
+                                var actualShare = details.Response.ShareByAccount.FirstOrDefault(x => x.IssuerName == createOrderRequest.IssuerName);
+                                businessRule = OrderBusinessRules.InsufficientStocks(actualShare, createOrderRequest);
+                            }
 
+                            if (string.IsNullOrEmpty(businessRule))
+                            {
+
+                                if (details.Response.ShareByAccount.Any(x => x.IssuerName == createOrderRequest.IssuerName))
+                                {
+                                    //update
+                                    decimal total;
+
+                                    var share = details.Response.ShareByAccount.First(x => x.IssuerName == createOrderRequest.IssuerName);
+                                    if (createOrderRequest.Operation)
+                                        total = ((share.SharePrice * share.TotalShare) + (createOrderRequest.SharePrice * createOrderRequest.Shares)) / (share.TotalShare + createOrderRequest.Shares);
+                                    else
+                                    {
+                                        var remainingStocks = (share.TotalShare - createOrderRequest.Shares);
+
+                                        if (remainingStocks == 0)
+                                            total = 0;
+                                        else
+                                            total = ((share.SharePrice * share.TotalShare) - (createOrderRequest.SharePrice * createOrderRequest.Shares)) / remainingStocks;
+                                    }
+
+                                    var updateShareByAccountRequest = new UpdateShareByAccountRequest();
+                                    updateShareByAccountRequest.AccountId = createOrderRequest.AccountId;
+                                    updateShareByAccountRequest.SharePrice = total;
+                                    updateShareByAccountRequest.IssuerName = createOrderRequest.IssuerName;
+
+                                    if (createOrderRequest.Operation)
+                                        updateShareByAccountRequest.TotalShare = share.TotalShare + createOrderRequest.Shares;
+                                    else
+                                        updateShareByAccountRequest.TotalShare = share.TotalShare - createOrderRequest.Shares;
+
+                                    await OrderRepository.UpdateShareByAccount(updateShareByAccountRequest, "");
+                                }
+                                else
+                                {
+                                    //add
+                                    var createShareByAccountRequest = new CreateShareByAccountRequest();
+
+                                    createShareByAccountRequest.AccountId = createOrderRequest.AccountId;
+                                    createShareByAccountRequest.SharePrice = createOrderRequest.SharePrice;
+                                    createShareByAccountRequest.IssuerName = createOrderRequest.IssuerName;
+                                    createShareByAccountRequest.TotalShare = createOrderRequest.Shares;
+
+                                    await OrderRepository.CreateShareByAccount(createShareByAccountRequest, "");
+                                }
+
+                                response = await OrderRepository.CreateOrder(createOrderRequest, successMessage);
+                                await UnitOfWork.CommitAsync();
                             }
                         }
                     }
                 }
             }
-
-       
 
             response.Message = businessRule;
             return response;

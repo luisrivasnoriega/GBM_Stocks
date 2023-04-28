@@ -12,5 +12,9 @@ namespace GBM_Stocks_Core_Infrastructure.Interfaces
         public Task<StoredSingleResponse<CreateOrderResponse>> CreateOrder(CreateOrderRequest createOrderRequest, string successMessage);
 
         public Task<StoredSingleResponse<GetAccountDetailsResponse>> GetAccountDetails(GetAccountDetailsRequest getAccountDetailsRequest, string successMessage);
+
+        public Task<StoredSingleResponse<CreateShareByAccountResponse>> CreateShareByAccount(CreateShareByAccountRequest createShareByAccountRequest, string successMessage);
+
+        public Task<StoredSingleResponse<UpdateShareByAccountResponse>> UpdateShareByAccount(UpdateShareByAccountRequest updateShareByAccountRequest, string successMessage);
     }
 }

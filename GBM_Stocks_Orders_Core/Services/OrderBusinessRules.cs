@@ -39,12 +39,16 @@ namespace GBM_Stocks_Orders_Core.Services
         public string InsufficientBalance(decimal cash, CreateOrderRequest createOrderRequest)
         {
             decimal total = createOrderRequest.SharePrice * createOrderRequest.Shares;
-            return cash < total ? "Cash is insufficient" : "";
+            return cash < total ? "Cash is not enough" : "";
         }
 
-        public string InsufficientStocks(int share, CreateOrderRequest createOrderRequest)
+        public string InsufficientStocks(ShareByAccountView? share, CreateOrderRequest createOrderRequest)
         {
-            throw new NotImplementedException();
+            if (share != null && share.TotalShare < createOrderRequest.Shares)
+            {
+                return "Insufficient Stocks";
+            }
+            return string.Empty;
         }
 
         public string MinimiumShare(int share)

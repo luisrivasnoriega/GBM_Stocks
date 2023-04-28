@@ -9,7 +9,6 @@ namespace GBM_Stocks_Orders_Infrastructure.Extensions
         public static IServiceCollection StocksOrdersRepositoryServiceCollection(this IServiceCollection services)
         {
             services.AddScoped<IOrdersRepository, OrdersRepository>();
-            services.AddScoped<IShareAccountRepository, ShareAccountRepository>();
             return services;
         }
     }

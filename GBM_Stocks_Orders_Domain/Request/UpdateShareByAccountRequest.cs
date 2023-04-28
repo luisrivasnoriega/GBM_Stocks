@@ -1,24 +1,20 @@
 ﻿using GBM_Stocks_Database.Domain;
 using GBM_Stocks_Infrastructure.Extensions;
 using System.Data;
-using System.Text.Json.Serialization;
 
 namespace GBM_Stocks_Orders_Domain.Request
 {
-    /// <summary>
-    /// Create order.
-    /// </summary>
-    public partial class CreateOrderRequest : StoredRequest
+    public partial class UpdateShareByAccountRequest : StoredRequest
     {
+        /// <summary>
+        /// The account id
+        /// </summary>
+        public int AccountId { get; set; }
+
         /// <summary>
         /// Issuer Name
         /// </summary>
         public string IssuerName { get; set; }
-
-        /// <summary>
-        /// Shares
-        /// </summary>
-        public int Shares { get; set; }
 
         /// <summary>
         /// Share Price
@@ -26,23 +22,12 @@ namespace GBM_Stocks_Orders_Domain.Request
         public decimal SharePrice { get; set; }
 
         /// <summary>
-        /// Timestamp
+        /// Total Share
         /// </summary>
-        public int Timestamp { get; set; }
-
-        /// <summary>
-        /// The account id
-        /// </summary>
-        [JsonIgnore]
-        public int AccountId { get; set; }
-
-        /// <summary>
-        /// Operation 1 Buy, 0 Sell
-        /// </summary>
-        public bool Operation { get; set; }
+        public int TotalShare { get; set; }
     }
 
-    public partial class CreateOrderRequest : StoredRequest
+    public partial class UpdateShareByAccountRequest : StoredRequest
     {
         public override Task<bool> PreValidate()
         {
@@ -62,7 +47,7 @@ namespace GBM_Stocks_Orders_Domain.Request
 
         public override string GetStoredName()
         {
-            return "usp_CreateOrder";
+            return "usp_UpdateShareByAccount";
         }
     }
 }

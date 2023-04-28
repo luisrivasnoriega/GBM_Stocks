@@ -43,5 +43,17 @@ namespace GBM_Stocks_Core_Infrastructure.Repository
 
             return response;
         }
+
+        public async Task<StoredSingleResponse<CreateShareByAccountResponse>> CreateShareByAccount(CreateShareByAccountRequest createShareByAccountRequest, string successMessage)
+        {
+            var createdShareByAccount = await Transact.SingleExecution<CreateShareByAccountRequest, CreateShareByAccountResponse>(createShareByAccountRequest, successMessage);
+            return createdShareByAccount;
+        }
+
+        public async Task<StoredSingleResponse<UpdateShareByAccountResponse>> UpdateShareByAccount(UpdateShareByAccountRequest updateShareByAccountRequest, string successMessage)
+        {
+            var updatedShareByAccount = await Transact.SingleExecution<UpdateShareByAccountRequest, UpdateShareByAccountResponse>(updateShareByAccountRequest, successMessage);
+            return updatedShareByAccount;
+        }
     }
 }
