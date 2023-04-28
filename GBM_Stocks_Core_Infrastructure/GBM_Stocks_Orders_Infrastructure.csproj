@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GBM_Stocks_Accounts_Domain\GBM_Stocks_Accounts_Domain.csproj" />
     <ProjectReference Include="..\GBM_Stocks_Infrastructure\GBM_Stocks_Infrastructure.csproj" />
+    <ProjectReference Include="..\GBM_Stocks_Orders_Domain\GBM_Stocks_Orders_Domain.csproj" />
   </ItemGroup>
 
 </Project>

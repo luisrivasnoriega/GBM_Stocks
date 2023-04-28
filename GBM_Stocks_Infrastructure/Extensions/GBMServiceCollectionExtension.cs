@@ -6,7 +6,7 @@ namespace GBM_Stocks_Infrastructure.Extensions
 {
     public static class GBMServiceCollectionExtension
     {
-        public static IServiceCollection AddAdBuilderServices(this IServiceCollection services)
+        public static IServiceCollection AddGBMServices(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITransact, Transact>();

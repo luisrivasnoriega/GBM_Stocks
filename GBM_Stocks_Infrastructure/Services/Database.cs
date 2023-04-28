@@ -14,7 +14,7 @@ namespace GBM_Stocks_Infrastructure.Services
                 DataSource = "CENTIMX\\CENTIMX_SQL",
                 UserID = "sa",
                 Password = "SaMaster",
-                InitialCatalog = "AdBuilder",
+                InitialCatalog = "GBM",
                 TrustServerCertificate = true
             };
 

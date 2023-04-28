@@ -31,7 +31,7 @@ namespace GBM_Stocks_Infrastructure.Implementations
         /// <param name="successMessage"></param>
         /// <param name="errorMessage"></param>
         /// <returns></returns>
-        public async Task<StoredResponse<TMap>> Execution<T, TMap>(T stored, string successMessage, string errorMessage) where T : StoredRequest where TMap : class
+        public async Task<StoredResponse<TMap>> Execution<T, TMap>(T stored, string successMessage) where T : StoredRequest where TMap : class
         {
             var storedResponse = new StoredResponse<TMap>();
             var response = await stored.ExecDataSetAsync<TMap>(UnitOfWork.Connection, UnitOfWork.SqlTransaction);
@@ -51,7 +51,7 @@ namespace GBM_Stocks_Infrastructure.Implementations
         /// <param name="successMessage"></param>
         /// <param name="errorMessage"></param>
         /// <returns></returns>
-        public async Task<StoredResponse> MultipleExecution<T>(T stored, string successMessage, string errorMessage) where T : StoredRequest
+        public async Task<StoredResponse> MultipleExecution<T>(T stored, string successMessage) where T : StoredRequest
         {
             var storedResponse = new StoredResponse();
             var response = await stored.ExecDataSetAsync(UnitOfWork.Connection, UnitOfWork.SqlTransaction);
@@ -71,7 +71,7 @@ namespace GBM_Stocks_Infrastructure.Implementations
         /// <param name="successMessage"></param>
         /// <param name="errorMessage"></param>
         /// <returns></returns>
-        public async Task<StoredSingleResponse<TMap>> SingleExecution<T, TMap>(T stored, string successMessage, string errorMessage) where T : StoredRequest where TMap : class
+        public async Task<StoredSingleResponse<TMap>> SingleExecution<T, TMap>(T stored, string successMessage) where T : StoredRequest where TMap : class
         {
             var storedResponse = new StoredSingleResponse<TMap>();
             var response = await stored.ExecAsync<TMap>(UnitOfWork.Connection, UnitOfWork.SqlTransaction);

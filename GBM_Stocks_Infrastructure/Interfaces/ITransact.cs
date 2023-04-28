@@ -16,7 +16,7 @@ namespace GBM_Stocks_Infrastructure.Interfaces
         /// <param name="successMessage"></param>
         /// <param name="errorMessage"></param>
         /// <returns></returns>
-        Task<StoredResponse<TMap>> Execution<T, TMap>(T stored, string successMessage, string errorMessage) where T : StoredRequest where TMap : class;
+        Task<StoredResponse<TMap>> Execution<T, TMap>(T stored, string successMessage) where T : StoredRequest where TMap : class;
 
         /// <summary>
         /// 
@@ -27,7 +27,7 @@ namespace GBM_Stocks_Infrastructure.Interfaces
         /// <param name="successMessage"></param>
         /// <param name="errorMessage"></param>
         /// <returns></returns>
-        Task<StoredSingleResponse<TMap>> SingleExecution<T, TMap>(T stored, string successMessage, string errorMessage) where T : StoredRequest where TMap : class;
+        Task<StoredSingleResponse<TMap>> SingleExecution<T, TMap>(T stored, string successMessage) where T : StoredRequest where TMap : class;
 
         /// <summary>
         /// 
@@ -37,6 +37,6 @@ namespace GBM_Stocks_Infrastructure.Interfaces
         /// <param name="successMessage"></param>
         /// <param name="errorMessage"></param>
         /// <returns></returns>
-        Task<StoredResponse> MultipleExecution<T>(T stored, string successMessage, string errorMessage) where T : StoredRequest;
+        Task<StoredResponse> MultipleExecution<T>(T stored, string successMessage) where T : StoredRequest;
     }
 }
