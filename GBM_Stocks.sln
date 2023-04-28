@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GBM_Stocks_Orders_Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBM_Test", "GBM_Test\GBM_Test.csproj", "{2D65226B-82E7-4A87-8D46-56F50045620E}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GBM_DatabaseProject", "GBM_DatabaseProject\GBM_DatabaseProject.sqlproj", "{51DE6E1E-DD25-4AEC-A8B9-BED7DF48CD4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,12 @@ Global
 		{2D65226B-82E7-4A87-8D46-56F50045620E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D65226B-82E7-4A87-8D46-56F50045620E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D65226B-82E7-4A87-8D46-56F50045620E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51DE6E1E-DD25-4AEC-A8B9-BED7DF48CD4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51DE6E1E-DD25-4AEC-A8B9-BED7DF48CD4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51DE6E1E-DD25-4AEC-A8B9-BED7DF48CD4E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{51DE6E1E-DD25-4AEC-A8B9-BED7DF48CD4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51DE6E1E-DD25-4AEC-A8B9-BED7DF48CD4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51DE6E1E-DD25-4AEC-A8B9-BED7DF48CD4E}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
