@@ -8,5 +8,7 @@ namespace GBM_Stocks_Orders_Domain.Response
 {
     public class CreateOrderResponse
     {
+
+        public string BusinessRule { get; set; }
     }
 }

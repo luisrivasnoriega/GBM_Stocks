@@ -10,5 +10,7 @@ namespace GBM_Stocks_Core_Infrastructure.Interfaces
         ITransact Transact { get; set; }
 
         public Task<StoredSingleResponse<CreateOrderResponse>> CreateOrder(CreateOrderRequest createOrderRequest, string successMessage);
+
+        public Task<StoredSingleResponse<GetAccountDetailsResponse>> GetAccountDetails(GetAccountDetailsRequest getAccountDetailsRequest, string successMessage);
     }
 }

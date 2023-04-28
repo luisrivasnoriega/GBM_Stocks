@@ -8,6 +8,7 @@ namespace GBM_Stocks_Orders_Core.Extensions
     {
         public static IServiceCollection StocksOrdersCoreServiceCollection(this IServiceCollection services)
         {
+            services.AddScoped<IOrderBusinessRules, OrderBusinessRules>();
             services.AddScoped<IOrdersService, OrdersService>();
             return services;
         }
