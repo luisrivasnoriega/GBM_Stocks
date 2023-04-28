@@ -1,7 +1,5 @@
 ﻿using GBM_Stocks_Accounts_Core.Interfaces;
-using GBM_Stocks_Accounts_Core.Services;
 using GBM_Stocks_Accounts_Domain.Request;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GBM_Stocks.Controllers
@@ -27,7 +25,7 @@ namespace GBM_Stocks.Controllers
         [HttpPost("Post")]
         public async Task<ActionResult> PostAccount(CreateAccountRequest createAccountRequest)
         {
-            var response = await AccountService.CreateAccount(createAccountRequest, "Create account");
+            var response = await AccountService.CreateAccount(createAccountRequest, "Created account");
             return Ok(response);
         }
     }

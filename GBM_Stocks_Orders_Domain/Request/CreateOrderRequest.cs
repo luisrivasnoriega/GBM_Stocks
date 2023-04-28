@@ -1,5 +1,6 @@
 ﻿using GBM_Stocks_Database.Domain;
 using GBM_Stocks_Infrastructure.Extensions;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Text.Json.Serialization;
 
@@ -13,16 +14,19 @@ namespace GBM_Stocks_Orders_Domain.Request
         /// <summary>
         /// Issuer Name
         /// </summary>
+        [MinLength(1)]
         public string IssuerName { get; set; }
 
         /// <summary>
         /// Shares
         /// </summary>
+        [Range(1,int.MaxValue)]
         public int Shares { get; set; }
 
         /// <summary>
         /// Share Price
         /// </summary>
+        [Range(0.001, Double.MaxValue)]
         public decimal SharePrice { get; set; }
 
         /// <summary>

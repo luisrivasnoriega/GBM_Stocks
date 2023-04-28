@@ -94,9 +94,9 @@ namespace GBM_Stocks_Orders_Core.Services
                 currentBalanceView.Issuers = details.Response.ShareByAccount.Where(x=> x.TotalShare >0).ToList();
                 response.Success = true;
                 response.Message = successMessage;
+                currentBalanceView.Cash = details.Response.Account.Cash;
             }
 
-            currentBalanceView.Cash = details.Response.Account.Cash;
             response.Response = currentBalanceView;
             return response;
         }

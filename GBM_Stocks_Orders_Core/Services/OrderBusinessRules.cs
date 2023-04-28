@@ -15,7 +15,7 @@ namespace GBM_Stocks_Orders_Core.Services
         public string ClosedMarket(int timestamp)
         {
             var actualTime = timestamp.UnixTimeStampToDateTime();
-            return actualTime.Hour >= 6 && actualTime.Hour <= 15 ? string.Empty : "Market is closed";
+            return actualTime.Hour >= 6 && actualTime.Hour <= 15 && timestamp > 0 ? string.Empty : "Market is closed";
         }
 
         public string DuplicatedOperation(List<OrderView> orders, CreateOrderRequest createOrderRequest)
@@ -44,7 +44,7 @@ namespace GBM_Stocks_Orders_Core.Services
 
         public string MinimiumShare(int share)
         {
-            return share < 0 ? "You must put a share amount greater than 0" : string.Empty;
+            return share < 1 ? "You must put a share amount greater than 0" : string.Empty;
         }
 
         public UpdateShareByAccountRequest UpdateShareByAccountRequest(CreateOrderRequest createOrderRequest, ShareByAccountView share)

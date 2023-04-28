@@ -17,19 +17,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GBM_Stocks_Database", "GBM_
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{4915CF47-D786-4A26-BFB3-83A6740312FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBM_Stocks_Infrastructure", "GBM_Stocks_Infrastructure\GBM_Stocks_Infrastructure.csproj", "{BD2AFC7C-B499-4781-9405-3812FB0669AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GBM_Stocks_Infrastructure", "GBM_Stocks_Infrastructure\GBM_Stocks_Infrastructure.csproj", "{BD2AFC7C-B499-4781-9405-3812FB0669AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBM_Stocks_Accounts_Domain", "GBM_Stocks_Accounts_Domain\GBM_Stocks_Accounts_Domain.csproj", "{D1C0FC7C-5B53-4943-B1B8-2E0D58D47EE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GBM_Stocks_Accounts_Domain", "GBM_Stocks_Accounts_Domain\GBM_Stocks_Accounts_Domain.csproj", "{D1C0FC7C-5B53-4943-B1B8-2E0D58D47EE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBM_Stocks_Accounts_Infrastructure", "GBM_Stocks_Accounts_Infrastructure\GBM_Stocks_Accounts_Infrastructure.csproj", "{0961A020-DD15-48A4-82A9-F7CCDAF016AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GBM_Stocks_Accounts_Infrastructure", "GBM_Stocks_Accounts_Infrastructure\GBM_Stocks_Accounts_Infrastructure.csproj", "{0961A020-DD15-48A4-82A9-F7CCDAF016AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBM_Stocks_Accounts_Core", "GBM_Stocks_Accounts_Services\GBM_Stocks_Accounts_Core.csproj", "{83EF5D40-43ED-4B08-80EA-B0D502EE9D5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GBM_Stocks_Accounts_Core", "GBM_Stocks_Accounts_Services\GBM_Stocks_Accounts_Core.csproj", "{83EF5D40-43ED-4B08-80EA-B0D502EE9D5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBM_Stocks_Orders_Core", "GBM_Stocks_Orders_Core\GBM_Stocks_Orders_Core.csproj", "{EE531DB5-1B97-4176-A924-D46DA764828E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GBM_Stocks_Orders_Core", "GBM_Stocks_Orders_Core\GBM_Stocks_Orders_Core.csproj", "{EE531DB5-1B97-4176-A924-D46DA764828E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBM_Stocks_Orders_Domain", "GBM_Stocks_Orders_Domain\GBM_Stocks_Orders_Domain.csproj", "{B366C29A-0DCF-4CFE-BDA4-2440F808A7EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GBM_Stocks_Orders_Domain", "GBM_Stocks_Orders_Domain\GBM_Stocks_Orders_Domain.csproj", "{B366C29A-0DCF-4CFE-BDA4-2440F808A7EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBM_Stocks_Orders_Infrastructure", "GBM_Stocks_Core_Infrastructure\GBM_Stocks_Orders_Infrastructure.csproj", "{BDCAE06E-7D9B-4321-8F56-67616F5F02D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GBM_Stocks_Orders_Infrastructure", "GBM_Stocks_Core_Infrastructure\GBM_Stocks_Orders_Infrastructure.csproj", "{BDCAE06E-7D9B-4321-8F56-67616F5F02D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBM_Test", "GBM_Test\GBM_Test.csproj", "{2D65226B-82E7-4A87-8D46-56F50045620E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{BDCAE06E-7D9B-4321-8F56-67616F5F02D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDCAE06E-7D9B-4321-8F56-67616F5F02D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDCAE06E-7D9B-4321-8F56-67616F5F02D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D65226B-82E7-4A87-8D46-56F50045620E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D65226B-82E7-4A87-8D46-56F50045620E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D65226B-82E7-4A87-8D46-56F50045620E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D65226B-82E7-4A87-8D46-56F50045620E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
