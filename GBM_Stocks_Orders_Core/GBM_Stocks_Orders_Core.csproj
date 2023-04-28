@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GBM_Stocks_Accounts_Infrastructure\GBM_Stocks_Accounts_Infrastructure.csproj" />
     <ProjectReference Include="..\GBM_Stocks_Core_Infrastructure\GBM_Stocks_Orders_Infrastructure.csproj" />
     <ProjectReference Include="..\GBM_Stocks_Database\GBM_Stocks_Database.csproj" />
     <ProjectReference Include="..\GBM_Stocks_Orders_Domain\GBM_Stocks_Orders_Domain.csproj" />

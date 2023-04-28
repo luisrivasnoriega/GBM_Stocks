@@ -26,5 +26,11 @@ namespace GBM_Stocks_Accounts_Infrastructure.Repository
             var accountById = await Transact.SingleExecution<CreateAccountRequest, CreateAccountResponse>(createAccountRequest, successMessage);
             return accountById;
         }
+
+        public async Task<StoredSingleResponse<UpdateAccountResponse>> UpdateAccount(UpdateAccountRequest updateAccountRequest, string successMessage)
+        {
+            var response = await Transact.SingleExecution<UpdateAccountRequest, UpdateAccountResponse>(updateAccountRequest, successMessage);
+            return response;
+        }
     }
 }

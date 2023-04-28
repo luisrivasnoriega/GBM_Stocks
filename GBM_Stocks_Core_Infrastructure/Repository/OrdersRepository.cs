@@ -3,6 +3,7 @@ using GBM_Stocks_Database.Domain;
 using GBM_Stocks_Infrastructure.Interfaces;
 using GBM_Stocks_Orders_Domain.Request;
 using GBM_Stocks_Orders_Domain.Response;
+using GBM_Stocks_Orders_Domain.Views;
 using System.Text.Json;
 
 namespace GBM_Stocks_Core_Infrastructure.Repository

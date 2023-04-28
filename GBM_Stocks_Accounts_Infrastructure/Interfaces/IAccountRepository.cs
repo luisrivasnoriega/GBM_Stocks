@@ -12,5 +12,7 @@ namespace GBM_Stocks_Accounts_Infrastructure.Interfaces
         public Task<StoredSingleResponse<GetAccountResponse>> GetAccountById(GetAccountRequest getAccountRequest, string successMessage);
 
         public Task<StoredSingleResponse<CreateAccountResponse>> CreateAccount(CreateAccountRequest createAccountRequest, string successMessage);
+
+        public Task<StoredSingleResponse<UpdateAccountResponse>> UpdateAccount(UpdateAccountRequest updateAccountRequest, string successMessage);
     }
 }

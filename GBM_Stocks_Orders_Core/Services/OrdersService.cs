@@ -1,28 +1,31 @@
-﻿using GBM_Stocks_Core_Infrastructure.Interfaces;
+﻿using GBM_Stocks_Accounts_Domain.Request;
+using GBM_Stocks_Accounts_Infrastructure.Interfaces;
+using GBM_Stocks_Core_Infrastructure.Interfaces;
 using GBM_Stocks_Database.Domain;
 using GBM_Stocks_Infrastructure.Interfaces;
 using GBM_Stocks_Orders_Core.Interfaces;
 using GBM_Stocks_Orders_Domain.Request;
-using GBM_Stocks_Orders_Domain.Response;
+using GBM_Stocks_Orders_Domain.Views;
 
 namespace GBM_Stocks_Orders_Core.Services
 {
     public class OrdersService : IOrdersService
     {
+        IAccountRepository AccountRepository { get; set; }
         IOrdersRepository OrderRepository { get; set; }
         IOrderBusinessRules OrderBusinessRules { get; set; }
         IUnitOfWork UnitOfWork { get; set; }
 
-        public OrdersService(IOrdersRepository orderRepository, IOrderBusinessRules orderBusinessRules, IUnitOfWork unitOfWork)
+        public OrdersService(IOrdersRepository orderRepository, IOrderBusinessRules orderBusinessRules, IAccountRepository accountRepository, IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
             OrderRepository = orderRepository;
             OrderBusinessRules = orderBusinessRules;
+            AccountRepository = accountRepository;
         }
 
-        public async Task<StoredSingleResponse<CreateOrderResponse>> CreateOrder(CreateOrderRequest createOrderRequest, string successMessage)
+        public async Task<StoredSingleResponse<CurrentBalanceView>> CreateOrder(CreateOrderRequest createOrderRequest, string successMessage)
         {
-            var response = new StoredSingleResponse<CreateOrderResponse>();
             var getAccountDetailsRequest = new GetAccountDetailsRequest
             {
                 AccountId = createOrderRequest.AccountId
@@ -39,8 +42,7 @@ namespace GBM_Stocks_Orders_Core.Services
                     businessRule = OrderBusinessRules.MinimiumShare(createOrderRequest.Shares);
                     if (string.IsNullOrEmpty(businessRule))
                     {
-                        var lastOrder = details.Response.Orders.MaxBy(x => x.Timestamp);
-                        businessRule = OrderBusinessRules.DuplicatedOperation(lastOrder, createOrderRequest);
+                        businessRule = OrderBusinessRules.DuplicatedOperation(details.Response.Orders, createOrderRequest);
                         if (string.IsNullOrEmpty(businessRule))
                         {
                             //buy
@@ -57,51 +59,24 @@ namespace GBM_Stocks_Orders_Core.Services
 
                             if (string.IsNullOrEmpty(businessRule))
                             {
-
                                 if (details.Response.ShareByAccount.Any(x => x.IssuerName == createOrderRequest.IssuerName))
                                 {
-                                    //update
-                                    decimal total;
-
                                     var share = details.Response.ShareByAccount.First(x => x.IssuerName == createOrderRequest.IssuerName);
-                                    if (createOrderRequest.Operation)
-                                        total = ((share.SharePrice * share.TotalShare) + (createOrderRequest.SharePrice * createOrderRequest.Shares)) / (share.TotalShare + createOrderRequest.Shares);
-                                    else
-                                    {
-                                        var remainingStocks = (share.TotalShare - createOrderRequest.Shares);
-
-                                        if (remainingStocks == 0)
-                                            total = 0;
-                                        else
-                                            total = ((share.SharePrice * share.TotalShare) - (createOrderRequest.SharePrice * createOrderRequest.Shares)) / remainingStocks;
-                                    }
-
-                                    var updateShareByAccountRequest = new UpdateShareByAccountRequest();
-                                    updateShareByAccountRequest.AccountId = createOrderRequest.AccountId;
-                                    updateShareByAccountRequest.SharePrice = total;
-                                    updateShareByAccountRequest.IssuerName = createOrderRequest.IssuerName;
-
-                                    if (createOrderRequest.Operation)
-                                        updateShareByAccountRequest.TotalShare = share.TotalShare + createOrderRequest.Shares;
-                                    else
-                                        updateShareByAccountRequest.TotalShare = share.TotalShare - createOrderRequest.Shares;
-
-                                    await OrderRepository.UpdateShareByAccount(updateShareByAccountRequest, "");
+                                    var updateShareByAccountRequest = OrderBusinessRules.UpdateShareByAccountRequest(createOrderRequest, share);
+                                    await OrderRepository.UpdateShareByAccount(updateShareByAccountRequest, "Updating share by account");
                                 }
                                 else
                                 {
-                                    //add
-                                    var createShareByAccountRequest = new CreateShareByAccountRequest();
-
-                                    createShareByAccountRequest.AccountId = createOrderRequest.AccountId;
-                                    createShareByAccountRequest.SharePrice = createOrderRequest.SharePrice;
-                                    createShareByAccountRequest.IssuerName = createOrderRequest.IssuerName;
-                                    createShareByAccountRequest.TotalShare = createOrderRequest.Shares;
-
-                                    await OrderRepository.CreateShareByAccount(createShareByAccountRequest, "");
+                                    var createShareByAccountRequest = OrderBusinessRules.CreateShareByAccountRequest(createOrderRequest);
+                                    await OrderRepository.CreateShareByAccount(createShareByAccountRequest, "Creating share by account");
                                 }
 
-                                response = await OrderRepository.CreateOrder(createOrderRequest, successMessage);
+                                var updateAccountRequest = new UpdateAccountRequest();
+                                updateAccountRequest.AccountId = createOrderRequest.AccountId;
+                                updateAccountRequest.Cash = OrderBusinessRules.UpdateCashAccount(createOrderRequest, details.Response.Account);
+
+                                await AccountRepository.UpdateAccount(updateAccountRequest, "update account");
+                                await OrderRepository.CreateOrder(createOrderRequest, successMessage);
                                 await UnitOfWork.CommitAsync();
                             }
                         }
@@ -109,7 +84,20 @@ namespace GBM_Stocks_Orders_Core.Services
                 }
             }
 
-            response.Message = businessRule;
+            details = await OrderRepository.GetAccountDetails(getAccountDetailsRequest, successMessage);
+            var response = new StoredSingleResponse<CurrentBalanceView>();
+            var currentBalanceView = new CurrentBalanceView();
+            currentBalanceView.BusinessError = businessRule;
+
+            if (string.IsNullOrEmpty(businessRule))
+            {
+                currentBalanceView.Issuers = details.Response.ShareByAccount.Where(x=> x.TotalShare >0).ToList();
+                response.Success = true;
+                response.Message = successMessage;
+            }
+
+            currentBalanceView.Cash = details.Response.Account.Cash;
+            response.Response = currentBalanceView;
             return response;
         }
     }

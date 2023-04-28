@@ -1,8 +1,5 @@
-﻿using GBM_Stocks_Accounts_Core.Interfaces;
-using GBM_Stocks_Accounts_Domain.Request;
-using GBM_Stocks_Orders_Core.Interfaces;
+﻿using GBM_Stocks_Orders_Core.Interfaces;
 using GBM_Stocks_Orders_Domain.Request;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GBM_Stocks.Controllers
@@ -21,7 +18,7 @@ namespace GBM_Stocks.Controllers
         [HttpPost("{id:int}")]
         public async Task<ActionResult> CreateOrder(int id, CreateOrderRequest createOrderRequest)
         {
-            createOrderRequest.AccountId= id;
+            createOrderRequest.AccountId = id;
             var response = await OrdersService.CreateOrder(createOrderRequest, "Create order");
             return Ok(response);
         }
